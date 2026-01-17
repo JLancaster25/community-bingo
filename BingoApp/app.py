@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, join_room, emit
 from auth import register, login
 from stats import leaderboard
 from admin import is_admin
+from ai_caller import call as ai_call
 import os, random, secrets, string
 
 app = Flask(__name__)
@@ -148,6 +149,7 @@ def draw_number():
         return
 
     number = room["pool"].pop()
+    announcement = ai_call(number)
     winners = []
 
     for player, card in room["players"].items():
@@ -159,8 +161,10 @@ def draw_number():
 
     emit("number", {
         "number": number,
+        "call": announcement,
         "winners": winners
     }, room=code)
+    @socketio.on("draw_number")
 
 
 @socketio.on("get_card")
@@ -207,4 +211,5 @@ def admin():
 
 if __name__ == "__main__":
     socketio.run(app)
+
 
