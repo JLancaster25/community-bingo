@@ -4,6 +4,17 @@
     <title>Bingo Rooms</title>
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
+<form action="/login" method="POST">
+  <input name="username" placeholder="Username" required />
+  <input name="password" type="password" placeholder="Password" required />
+  <button>Login</button>
+</form>
+
+<form action="/register" method="POST">
+  <input name="username" placeholder="New Username" required />
+  <input name="password" type="password" placeholder="New Password" required />
+  <button>Register</button>
+</form>
 <body>
 
 <h1>Bingo</h1>
@@ -92,3 +103,4 @@ socket.on("card", card => {
 
 </body>
 </html>
+
