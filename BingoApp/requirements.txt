@@ -1,8 +1,0 @@
-flask
-flask-socketio
-flask-login
-flask-sqlalchemy
-eventlet
-gunicorn
-qrcode
-pyttsx3
