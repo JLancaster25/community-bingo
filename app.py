@@ -2,6 +2,8 @@ import os, random, secrets, psycopg2,string
 from flask import Flask, render_template, session
 from flask_socketio import SocketIO, emit, join_room
 from psycopg2.extras import RealDictCursor
+from flask import request, redirect, session
+from auth import register_user, authenticate_user
 
 
 app = Flask(__name__)
@@ -15,6 +17,32 @@ def get_db():
         cursor_factory=RealDictCursor,
         sslmode="require"
     )
+
+@app.route("/register", methods=["POST"])
+def register():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    register_user(username, password)
+    return redirect("/")
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    user_id = authenticate_user(username, password)
+    if not user_id:
+        return "Invalid login", 401
+
+    session["user_id"] = str(user_id)
+    session["username"] = username
+    return redirect("/")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 socketio = SocketIO(
     app,
