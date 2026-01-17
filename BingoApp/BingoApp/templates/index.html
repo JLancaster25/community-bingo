@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bingo Rooms</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+
+<h1>Bingo</h1>
+
+<input id="name" placeholder="Name"><br>
+<input id="room" placeholder="Room Code"><br>
+<input id="password" placeholder="Room Password"><br>
+
+<button onclick="create()">Create Room</button>
+<button onclick="join()">Join Room</button>
+
+<hr>
+
+<select id="pattern">
+    <option value="row">Row</option>
+    <option value="column">Column</option>
+    <option value="diagonal">Diagonal</option>
+    <option value="x">X</option>
+    <option value="corners">Corners</option>
+    <option value="blackout">Blackout</option>
+</select>
+
+<button onclick="start()">Start</button>
+<button onclick="draw()">Draw</button>
+
+<h2 id="status"></h2>
+<div id="card"></div>
+
+<script>
+const socket = io();
+
+function create() {
+    socket.emit("create_room", {
+        name: name.value,
+        password: password.value
+    });
+}
+
+function join() {
+    socket.emit("join_room", {
+        name: name.value,
+        code: room.value,
+        password: password.value
+    });
+}
+
+function start() {
+    socket.emit("start_game", {
+        pattern: pattern.value
+    });
+}
+
+function draw() {
+    socket.emit("draw_number");
+}
+
+socket.on("room_joined", d => {
+    status.innerText = `Room ${d.code} | Host: ${d.host}`;
+    socket.emit("get_card");
+});
+
+socket.on("game_started", p => {
+    status.innerText = "Pattern: " + p;
+});
+
+socket.on("number_drawn", d => {
+    status.innerText = "Number: " + d.number +
+        (d.winners.length ? " | BINGO: " + d.winners.join(", ") : "");
+    socket.emit("get_card");
+});
+
+socket.on("card", card => {
+    let html = "<table border=1><tr><th>B</th><th>I</th><th>N</th><th>G</th><th>O</th></tr>";
+    for (let i = 0; i < 5; i++) {
+        html += "<tr>";
+        for (let l of ["B","I","N","G","O"]) {
+            let v = card[l][i];
+            html += `<td style="padding:8px;${v==='X'?'background:lightgreen':''}">${v}</td>`;
+        }
+        html += "</tr>";
+    }
+    html += "</table>";
+    cardDiv.innerHTML = html;
+});
+</script>
+
+</body>
+</html>
