@@ -1,0 +1,26 @@
+body { font-family: Arial; text-align:center; }
+
+table { margin:auto; border-collapse:collapse; }
+td,th { border:1px solid #333; padding:12px; width:45px; }
+
+.marked {
+    background:#2ecc71;
+    color:white;
+    font-weight:bold;
+}
+
+#chat {
+    max-width:400px;
+    margin:20px auto;
+}
+
+#log {
+    border:1px solid #ccc;
+    height:150px;
+    overflow:auto;
+    padding:5px;
+}
+
+@media(max-width:600px){
+    td,th{padding:8px;width:35px;}
+}
