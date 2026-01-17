@@ -1,0 +1,90 @@
+// FULL FRONTEND RECODE — REACT + HTML + CSS + JAVASCRIPT
+// This frontend connects to your existing Flask + Socket.IO backend
+// Mobile-first, AI Caller support, leaderboard-ready
+
+
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import "./style.css";
+
+
+const socket = io(import.meta.env.VITE_API_URL || "");
+
+
+export default function App() {
+const [username, setUsername] = useState("");
+const [room, setRoom] = useState("");
+const [password, setPassword] = useState("");
+const [card, setCard] = useState(null);
+const [callout, setCallout] = useState("");
+const [numbers, setNumbers] = useState([]);
+
+
+useEffect(() => {
+socket.on("card", setCard);
+
+
+socket.on("number", data => {
+setCallout(data.call);
+setNumbers(prev => [...prev, data.number]);
+if ("speechSynthesis" in window) {
+speechSynthesis.cancel();
+speechSynthesis.speak(new SpeechSynthesisUtterance(data.call));
+}
+});
+
+
+return () => socket.removeAllListeners();
+}, []);
+
+
+const createRoom = () => {
+socket.emit("create_room", { name: username, password });
+};
+
+
+const joinRoom = () => {
+socket.emit("join_room", { name: username, code: room, password });
+};
+
+
+const drawNumber = () => socket.emit("draw_number");
+
+
+return (
+<div className="app">
+<h1>🎱 Bingo</h1>
+
+
+{!card && (
+<div className="panel">
+<input placeholder="Username" onChange={e=>setUsername(e.target.value)} />
+<input placeholder="Room Code" onChange={e=>setRoom(e.target.value)} />
+<input placeholder="Room Password" type="password" onChange={e=>setPassword(e.target.value)} />
+<button onClick={createRoom}>Create Room</button>
+<button onClick={joinRoom}>Join Room</button>
+</div>
+)}
+
+
+{callout && <div className="callout">{callout}</div>}
+
+
+{card && (
+<div className="card">
+{Object.values(card).flat().map((v,i)=>(
+<div key={i} className={`cell ${v === "X" ? "marked" : ""}`}>{v}</div>
+))}
+</div>
+)}
+
+
+{card && <button onClick={drawNumber}>Draw Number</button>}
+
+
+<div className="numbers">
+{numbers.map((n,i)=>(<span key={i}>{n}</span>))}
+</div>
+</div>
+);
+}
