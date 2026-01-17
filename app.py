@@ -1,9 +1,20 @@
-import os, random, secrets, string
+import os, random, secrets, psycopg2,string
 from flask import Flask, render_template, session
 from flask_socketio import SocketIO, emit, join_room
+from psycopg2.extras import RealDictCursor
+
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
+
+DATABASE_URL = os.environ["DATABASE_URL"]
+
+def get_db():
+    return psycopg2.connect(
+        DATABASE_URL,
+        cursor_factory=RealDictCursor,
+        sslmode="require"
+    )
 
 socketio = SocketIO(
     app,
