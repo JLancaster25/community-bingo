@@ -9,9 +9,9 @@ def __init__(self):
 
 def mark(self, number):
   for letter in self.card:
-  for i, value in enumerate(self.card[letter]):
-  if value == number:
-  self.card[letter][i] = "X"
+    for i, value in enumerate(self.card[letter]):
+      if value == number:
+      self.card[letter][i] = "X"
 
 
 def has_bingo(self):
@@ -40,3 +40,4 @@ def draw(self):
     self.called.append(call)
 
   return call
+
