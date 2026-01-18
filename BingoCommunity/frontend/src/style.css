@@ -1,0 +1,9 @@
+body { margin:0; background:#0f172a; color:white; font-family:system-ui }
+.app { max-width:420px; margin:auto; padding:1rem }
+.panel { padding:1rem }
+button, input { width:100%; padding:12px; margin-bottom:8px; border-radius:8px; border:none }
+button { background:#3b82f6; color:white }
+.card { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin:1rem 0 }
+.cell { aspect-ratio:1; background:#1e293b; display:flex; align-items:center; justify-content:center; border-radius:10px }
+.marked { background:#22c55e; color:black; font-weight:bold }
+.callout { text-align:center; margin:10px 0 }
