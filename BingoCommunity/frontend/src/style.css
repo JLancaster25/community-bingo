@@ -145,6 +145,33 @@ body {
   font-weight: 700;
 }
 
+/*admin*/
+
+.admin {
+  max-width: 900px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.admin-room {
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.admin-player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+button.danger {
+  background: var(--danger);
+  color: white;
+}
+
 /* =========================
    MOBILE OPTIMIZATION
 ========================= */

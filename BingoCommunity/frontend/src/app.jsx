@@ -56,7 +56,8 @@ export default function App() {
           </AdminRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="*" element={<Navigate to="/" />}/>
+	  <Route path="/admin" element={<AdminDashboard />} />
     </Routes>
   );
 }
