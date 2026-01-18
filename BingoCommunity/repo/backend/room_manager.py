@@ -11,9 +11,10 @@ class Room:
 
   def add_player(self, sid):
     self.players[sid] = BingoCard()
-  return self.players[sid]
+    return self.players[sid]
 
 
   def remove_player(self, sid):
 
     self.players.pop(sid, None)
+
