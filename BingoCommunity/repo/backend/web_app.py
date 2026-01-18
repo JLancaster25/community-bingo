@@ -4,8 +4,6 @@ from room_manager import Room
 from ai_caller import call_phrase
 from auth import authenticate, register
 
-import shutil
-print("gunicorn path:", shutil.which("gunicorn"))
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -51,4 +49,5 @@ number = int(call[1:])
 for card in room.players.values(): card.mark(number)
 
 emit("number", {"call": call_phrase(call)}, room=data["code"])
+
 
