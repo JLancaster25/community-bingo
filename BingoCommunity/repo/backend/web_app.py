@@ -14,14 +14,21 @@ rooms = {}
 
 @app.route("/register", methods=["POST"])
 def api_register():
-register(request.form["username"], request.form["password"])
-return {"status":"ok"}
+    register(
+        request.form["username"],
+        request.form["password"]
+    )
+    return {"status": "ok"}
+
 
 
 @app.route("/login", methods=["POST"])
 def api_login():
-ok = authenticate(request.form["username"], request.form["password"])
-return {"success": ok}
+    ok = authenticate(
+        request.form["username"],
+        request.form["password"]
+    )
+    return {"success": ok}
 
 
 @socketio.on("create_room")
@@ -49,5 +56,6 @@ number = int(call[1:])
 for card in room.players.values(): card.mark(number)
 
 emit("number", {"call": call_phrase(call)}, room=data["code"])
+
 
 
