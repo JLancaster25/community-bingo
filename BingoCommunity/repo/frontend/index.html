@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Basic -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lan Games Bingo — Multiplayer Bingo with Private Rooms, AI Caller, and Leaderboards" />
+    <meta name="author" content="Lan Games" />
+
+    <!-- Title -->
+    <title>Lan Games Bingo</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Global Styles -->
+    <style>
+      :root {
+        --primary: #6d28d9; /* purple */
+        --secondary: #2563eb; /* blue */
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #e5e7eb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        background: linear-gradient(135deg, var(--bg), #020617);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-size: 1.2rem;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- React Mount -->
+    <div id="root">
+      <div class="loading">Loading Lan Games Bingo…</div>
+    </div>
+
+    <!-- Entry Point -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

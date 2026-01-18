@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "langames-bingo",
+  "compatibility_date": "2025-01-01",
+
+  "pages_build_output_dir": "dist",
+
+  "vars": {
+    "VITE_API_URL": "https://your-backend.onrender.com",
+    "VITE_SUPABASE_URL": "https://YOUR_PROJECT.supabase.co",
+    "VITE_SUPABASE_ANON_KEY": "YOUR_PUBLIC_ANON_KEY"
+  }
+}
