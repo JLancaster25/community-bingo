@@ -30,11 +30,6 @@ def api_login():
     )
     return {"success": ok}
 
-
-# -------------------------
-# SOCKET.IO EVENTS
-# -------------------------
-
 @socketio.on("create_room")
 def handle_create_room(data):
     code = data["code"]
@@ -83,3 +78,4 @@ def handle_draw_number(data):
         {"call": call_phrase(call)},
         room=code
     )
+
