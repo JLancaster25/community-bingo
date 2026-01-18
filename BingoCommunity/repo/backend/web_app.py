@@ -34,10 +34,8 @@ def api_login():
 def handle_create_room(data):
     code = data["code"]
     password = data.get("password")
-
     rooms[code] = Room(code, password)
     join_room(code)
-
     emit("room_created", {"code": code})
 
 
@@ -45,14 +43,11 @@ def handle_create_room(data):
 def handle_join_room(data):
     code = data["code"]
     room = rooms.get(code)
-
     if not room:
         emit("error", {"message": "Room not found"})
         return
-
     card = room.add_player(request.sid)
     join_room(code)
-
     emit("card", card.card)
 
 
@@ -60,22 +55,18 @@ def handle_join_room(data):
 def handle_draw_number(data):
     code = data["code"]
     room = rooms.get(code)
-
     if not room:
         return
-
     call = room.game.draw()
     if not call:
         return
-
     number = int(call[1:])
-
     for card in room.players.values():
         card.mark(number)
-
     emit(
         "number",
         {"call": call_phrase(call)},
         room=code
     )
+
 
