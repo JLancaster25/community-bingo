@@ -32,30 +32,31 @@ def api_login():
 
 
 @socketio.on("create_room")
-def create_room(data):
-code = data["code"]
-rooms[code] = Room(code, data.get("password"))
-join_room(code)
+    def create_room(data):
+        code = data["code"]
+        rooms[code] = Room(code, data.get("password"))
+    join_room(code)
 emit("room_created", {"code": code})
 
 
 @socketio.on("join_room")
-def join(data):
-room = rooms[data["code"]]
-card = room.add_player(request.sid)
-join_room(data["code"])
+    def join(data):
+        room = rooms[data["code"]]
+        card = room.add_player(request.sid)
+    join_room(data["code"])
 emit("card", card.card)
 
 
 @socketio.on("draw_number")
-def draw(data):
-room = rooms[data["code"]]
-call = room.game.draw()
-if not call: return
-number = int(call[1:])
-for card in room.players.values(): card.mark(number)
+    def draw(data):
+        room = rooms[data["code"]]
+        call = room.game.draw()
+    if not call: return
+        number = int(call[1:])
+    for card in room.players.values(): card.mark(number)
 
 emit("number", {"call": call_phrase(call)}, room=data["code"])
+
 
 
 
